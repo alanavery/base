@@ -24,3 +24,8 @@ def about(request):
 def rooms_index(request):
     rooms = Room.objects.all()
     return render(request, 'rooms/index.html', {'rooms': rooms})
+
+
+def rooms_details(request, room_id):
+    room = Room.objects.get(id=room_id)
+    return render(request, 'rooms/details.html', {'room': room})

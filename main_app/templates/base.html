@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <title>Base</title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Base</a>
+      </h1>
+      <nav>
+        <li>
+          <ul>
+            <a href="/rooms">Rooms</a>
+          </ul>
+        </li>
+      </nav>
+      <nav>
+        <li>
+          <ul>
+            <a href="/about">About</a>
+          </ul>
+        </li>
+      </nav>
+      <hr />
+    </header>
+
+    <!-- prettier-ignore -->
+    {% block content %}
+    {% endblock %}
+
+    <footer>© 2021 Base, Inc.</footer>
+  </body>
+</html>

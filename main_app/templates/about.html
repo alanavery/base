@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Base</title>
-  </head>
-  <body>
-    <h1>About</h1>
-    <hr />
-    <footer>© 2021 Base, Inc.</footer>
-  </body>
-</html>
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>About</h2>
+<hr />
+{% endblock %}

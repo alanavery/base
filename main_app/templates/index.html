@@ -1,19 +1,9 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
-    <title>Base</title>
-  </head>
-  <body>
-    <h1>Home Page</h1>
-    <hr />
-    <p>
-      <a href="/rooms">Check out our rooms.</a>
-    </p>
-    <footer>© 2021 Base, Inc.</footer>
-  </body>
-</html>
+{% block content %}
+<p>
+  <a href="/rooms">Check out our rooms.</a>
+</p>
+{% endblock %}
