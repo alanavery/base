@@ -31,4 +31,4 @@ def about(request):
 
 
 def rooms_index(request):
-    return render(request, 'rooms_index.html', {'rooms': rooms})
+    return render(request, 'rooms/index.html', {'rooms': rooms})
