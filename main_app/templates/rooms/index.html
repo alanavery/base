@@ -5,6 +5,8 @@
 {% block content %}
 <h2>Rooms</h2>
 <hr />
+<p><a href="/rooms/create">Add Room</a></p>
+<hr />
 {% for room in rooms %}
 <h3>
   <a href="/rooms/{{ room.id }}">Room {{ room.number }}</a>
