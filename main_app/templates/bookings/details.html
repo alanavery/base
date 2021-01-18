@@ -1,0 +1,15 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Booking #{{ booking }}</h2>
+<hr />
+<p>Check-In: {{ booking.check_in_date }} at {{ booking.check_in_time }}</p>
+<p>Check-Out: {{ booking.check_out_date }} at {{ booking.check_out_time }}</p>
+<p>Total Number of Guests: {{ booking.total_guests }}</p>
+<p>Average Nightly Rate: {{ booking.rate }}</p>
+<hr />
+<p><a href="{% url 'bookings_update' booking.id %}">Change</a></p>
+<p><a href="{% url 'bookings_delete' booking.id %}">Cancel</a></p>
+{% endblock %}

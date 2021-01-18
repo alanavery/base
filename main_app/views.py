@@ -1,30 +1,30 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
-from .models import Room
+from .models import Booking
 
 # Create form views
 
 
-class RoomCreate(CreateView):
-    model = Room
+class BookingCreate(CreateView):
+    model = Booking
     fields = '__all__'
-    success_url = '/rooms'
+    success_url = '/bookings'
 
 
-class RoomUpdate(UpdateView):
-    model = Room
-    fields = ['beds', 'occupied', 'spotless']
+class BookingUpdate(UpdateView):
+    model = Booking
+    fields = ['check_in_date', 'check_out_date', 'total_guests']
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.save()
-        return HttpResponseRedirect(f'/rooms/{str(self.object.pk)}')
+        return HttpResponseRedirect(f'/bookings/{str(self.object.pk)}')
 
 
-class RoomDelete(DeleteView):
-    model = Room
-    success_url = '/rooms'
+class BookingDelete(DeleteView):
+    model = Booking
+    success_url = '/bookings'
 
 # Create your views here.
 
@@ -37,11 +37,11 @@ def about(request):
     return render(request, 'about.html')
 
 
-def rooms_index(request):
-    rooms = Room.objects.all()
-    return render(request, 'rooms/index.html', {'rooms': rooms})
+def bookings_index(request):
+    bookings = Booking.objects.all()
+    return render(request, 'bookings/index.html', {'bookings': bookings})
 
 
-def rooms_details(request, room_id):
-    room = Room.objects.get(id=room_id)
-    return render(request, 'rooms/details.html', {'room': room})
+def bookings_details(request, booking_id):
+    booking = Booking.objects.get(id=booking_id)
+    return render(request, 'bookings/details.html', {'booking': booking})
