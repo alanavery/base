@@ -22,14 +22,23 @@
       <nav>
         <ul>
           <li>
-            <a href="/bookings">Bookings</a>
+            <a href="{% url 'bookings_index' %}">Bookings</a>
           </li>
           <li>
-            <a href="/about">About</a>
+            <a href="{% url 'about' %}">About</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li>
+            <a href="{% url 'profile' user.username %}">Profile</a>
           </li>
           <li>
-            <a href="/login">Log In</a>
+            <a href="{% url 'logout' %}">Log Out</a>
           </li>
+          {% else %}
+          <li>
+            <a href="{% url 'login' %}">Log In</a>
+          </li>
+          {% endif %}
         </ul>
       </nav>
       <hr />
