@@ -6,7 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+
 from .models import Booking
+from .forms import UserForm, GuestProfileForm
 
 # Create generic form views
 
@@ -51,14 +53,20 @@ def about(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
+        user_form = UserForm(request.POST)
+        guest_profile_form = GuestProfileForm(request.POST)
+        if user_form.is_valid() and guest_profile_form.is_valid():
+            user = user_form.save()
+            guest_profile_form.save()
             login(request, user)
             return HttpResponseRedirect('/profile')
     else:
-        form = UserCreationForm()
-        return render(request, 'signup.html', {'form': form})
+        user_form = UserForm()
+        guest_profile_form = GuestProfileForm()
+        return render(request, 'signup.html', {
+            'user_form': user_form,
+            'guest_profile_form': guest_profile_form
+        })
 
 
 def login_view(request):
