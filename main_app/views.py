@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .models import Booking
 
-# Create form views
+# Create generic form views
 
 
 class BookingCreate(CreateView):
@@ -31,6 +33,7 @@ class BookingUpdate(UpdateView):
         return HttpResponseRedirect(f'/bookings/{str(self.object.pk)}')
 
 
+@method_decorator(login_required, name='dispatch')
 class BookingDelete(DeleteView):
     model = Booking
     success_url = '/bookings'
@@ -52,7 +55,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return HttpResponseRedirect(f'/user/{user.username}')
+            return HttpResponseRedirect('/profile')
     else:
         form = UserCreationForm()
         return render(request, 'signup.html', {'form': form})
@@ -68,7 +71,7 @@ def login_view(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect(f'/user/{u}')
+                    return HttpResponseRedirect('/profile')
                 else:
                     print('The account has been disabled.')
             else:
@@ -83,7 +86,9 @@ def logout_view(request):
     return HttpResponseRedirect('/')
 
 
-def profile(request, username):
+@login_required
+def profile(request):
+    username = request.user
     user = User.objects.get(username=username)
     bookings = Booking.objects.filter(user=user)
     return render(request, 'profile.html', {'username': username, 'bookings': bookings})
