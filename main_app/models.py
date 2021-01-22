@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 
 class Room(models.Model):
     number = models.PositiveIntegerField()
-    room_type = models.CharField(max_length=100)
-    beds = models.CharField(max_length=100)
+    room_type = models.CharField(max_length=150)
+    beds = models.CharField(max_length=150)
     accessible = models.BooleanField()
     occupied = models.BooleanField()
     spotless = models.BooleanField()
