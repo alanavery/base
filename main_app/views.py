@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .models import Booking
+
+from .forms import CustomUserCreationForm
+from .models import CustomUser, Booking
 
 # Create generic form views
 
@@ -51,13 +53,13 @@ def about(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return HttpResponseRedirect('/profile')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
         return render(request, 'signup.html', {'form': form})
 
 
@@ -89,7 +91,7 @@ def logout_view(request):
 @login_required
 def profile(request):
     username = request.user
-    user = User.objects.get(username=username)
+    user = CustomUser.objects.get(username=username)
     bookings = Booking.objects.filter(user=user)
     return render(request, 'profile.html', {'username': username, 'bookings': bookings})
 
