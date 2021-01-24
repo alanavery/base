@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -13,22 +13,6 @@ from .models import Room, Booking
 from .forms import AvailabilityForm
 
 # Generic views ——————————————————————————————
-
-class AvailabilityView(ListView):
-    model = Room
-    template_name = 'availability.html'
-
-    def get_queryset(self):
-        check_in_date = self.request.GET.get('check_in_date')
-        check_out_date = self.request.GET.get('check_out_date')
-        print(check_in_date, check_out_date)
-        available_rooms = Room.objects.exclude(
-            Q(booking__check_in_date__range=(check_in_date, check_out_date)) 
-        ).exclude(
-            Q(booking__check_out_date__range=(check_in_date, check_out_date))
-        )
-        return available_rooms
-
 
 class BookingCreate(CreateView):
     model = Booking
@@ -58,6 +42,22 @@ class BookingDelete(DeleteView):
     success_url = '/bookings'
 
 # Create your views here.
+
+def availability(request):
+    check_in_date = request.GET.get('check_in_date')
+    check_out_date = request.GET.get('check_out_date')
+    query_results = Room.objects.exclude(
+        Q(booking__check_in_date__range=(check_in_date, check_out_date)) 
+    ).exclude(
+        Q(booking__check_out_date__range=(check_in_date, check_out_date))
+    ).values('room_type', 'beds').distinct()
+    available_rooms = {}
+    for result in query_results:
+        if result['room_type'] in available_rooms.keys():
+            available_rooms[result['room_type']].append(result['beds'])
+        else:
+            available_rooms[result['room_type']] = [result['beds']]
+    return render(request, 'availability.html', {'available_rooms': available_rooms})
 
 
 def index(request):

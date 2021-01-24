@@ -39,7 +39,6 @@ class Room(models.Model):
 class Booking(models.Model):
     guest = models.ForeignKey(Guest, on_delete=models.SET_NULL, null=True)
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True)
-    # confirmation = models.PositiveIntegerField()
     check_in_date = models.DateField()
     check_in_time = models.TimeField(default='15:00:00')
     check_out_date = models.DateField()
