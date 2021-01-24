@@ -1,0 +1,12 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Availability</h2>
+<ul>
+  {% for room in object_list %}
+  <li>Room #{{ room }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

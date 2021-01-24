@@ -1,4 +1,6 @@
+from django.db.models import Q
 from django.shortcuts import render
+from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
@@ -6,9 +8,26 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .models import Booking
 
-# Create generic form views
+from .models import Room, Booking
+from .forms import AvailabilityForm
+
+# Generic views ——————————————————————————————
+
+class AvailabilityView(ListView):
+    model = Room
+    template_name = 'availability.html'
+
+    def get_queryset(self):
+        check_in_date = self.request.GET.get('check_in_date')
+        check_out_date = self.request.GET.get('check_out_date')
+        print(check_in_date, check_out_date)
+        available_rooms = Room.objects.exclude(
+            Q(booking__check_in_date__range=(check_in_date, check_out_date)) 
+        ).exclude(
+            Q(booking__check_out_date__range=(check_in_date, check_out_date))
+        )
+        return available_rooms
 
 
 class BookingCreate(CreateView):
@@ -42,7 +61,8 @@ class BookingDelete(DeleteView):
 
 
 def index(request):
-    return render(request, 'index.html')
+    form = AvailabilityForm()
+    return render(request, 'index.html', {'form': form})
 
 
 def about(request):

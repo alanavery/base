@@ -1,9 +1,24 @@
-<!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
+
+<h2>Check Availability</h2>
+
+<!-- <form action="{% url 'availability' %}" method="get">
+  <label for="date">Check-In Date</label>
+  <input id="date" name="date" type="text" class="datepicker" />
+  <label for="date">Check- Date</label>
+  <input id="date" name="date" type="text" class="datepicker" />
+  <input type="submit" value="Search" />
+</form> -->
+
+<form action="{% url 'availability' %}" method="get">
+  {{ form }}
+  <input type="submit" value="Search">
+</form>
+
 <p>
-  <a href="/bookings">View Bookings</a>
+  <a href="/bookings/create">Book a Stay</a>
 </p>
+
 {% endblock %}

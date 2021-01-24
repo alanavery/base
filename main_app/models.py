@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 
 
 class Guest(models.Model):
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     email = models.EmailField()
@@ -18,6 +17,11 @@ class Guest(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
+
+class GuestId(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    guest = models.ForeignKey(Guest, on_delete=models.CASCADE)
 
 
 class Room(models.Model):
@@ -35,14 +39,14 @@ class Room(models.Model):
 class Booking(models.Model):
     guest = models.ForeignKey(Guest, on_delete=models.SET_NULL, null=True)
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True)
-    confirmation = models.PositiveIntegerField()
+    # confirmation = models.PositiveIntegerField()
     check_in_date = models.DateField()
-    check_in_time = models.TimeField()
+    check_in_time = models.TimeField(default='15:00:00')
     check_out_date = models.DateField()
-    check_out_time = models.TimeField()
+    check_out_time = models.TimeField(default='12:00:00')
     total_guests = models.PositiveIntegerField()
     rate = models.FloatField()
     paid = models.BooleanField()
 
     def __str__(self):
-        return str(self.confirmation)
+        return str(self.id)
