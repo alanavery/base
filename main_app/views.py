@@ -14,7 +14,7 @@ from .forms import AvailabilityForm
 
 # Generic views ——————————————————————————————
 
-class BookingCreate(CreateView):
+class CreateBooking(CreateView):
     model = Booking
     fields = '__all__'
     success_url = '/bookings'
@@ -43,21 +43,29 @@ class BookingDelete(DeleteView):
 
 # Create your views here.
 
-def availability(request):
+def book(request):
     check_in_date = request.GET.get('check_in_date')
     check_out_date = request.GET.get('check_out_date')
-    query_results = Room.objects.exclude(
+    available_rooms = Room.objects.exclude(
         Q(booking__check_in_date__range=(check_in_date, check_out_date)) 
     ).exclude(
         Q(booking__check_out_date__range=(check_in_date, check_out_date))
-    ).values('room_type', 'beds').distinct()
-    available_rooms = {}
-    for result in query_results:
-        if result['room_type'] in available_rooms.keys():
-            available_rooms[result['room_type']].append(result['beds'])
+    )
+    results = {}
+    for room in available_rooms:
+        if room.room_type in results.keys():
+            if room.beds in results[room.room_type].keys():
+                results[room.room_type][room.beds].append(room)
+            else:
+                results[room.room_type][room.beds] = [room]
         else:
-            available_rooms[result['room_type']] = [result['beds']]
-    return render(request, 'availability.html', {'available_rooms': available_rooms})
+            bed_types = {}
+            bed_types[room.beds] = [room]
+            results[room.room_type] = bed_types
+    return render(request, 'book/index.html', {'results': results})
+
+def book_guest_details(request, room_number):
+    return render(request, 'book/guest_details.html', {'room_number': room_number})
 
 
 def index(request):

@@ -11,10 +11,11 @@ urlpatterns = [
     path('bookings/', views.bookings_index, name='bookings_index'),
     path('bookings/<int:booking_id>/',
          views.bookings_details, name='bookings_details'),
-    path('bookings/create/', views.BookingCreate.as_view(), name='bookings_create'),
     path('bookings/<int:pk>/update/',
          views.BookingUpdate.as_view(), name='bookings_update'),
     path('bookings/<int:pk>/delete/',
          views.BookingDelete.as_view(), name='bookings_delete'),
-    path('availability/', views.availability, name='availability'),
+    path('book/', views.book, name='book'),
+    path('book/<int:room_number>/', views.book_guest_details, name='book_guest_details'),
+#     path('book/guest_details', views.CreateBooking.as_view(), name='bookings_create'),
 ]
