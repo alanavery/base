@@ -44,8 +44,8 @@ class Booking(models.Model):
     check_out_date = models.DateField()
     check_out_time = models.TimeField(default='12:00:00')
     total_guests = models.PositiveIntegerField()
-    rate = models.FloatField()
-    paid = models.BooleanField()
+    rate = models.FloatField(default=100)
+    paid = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)

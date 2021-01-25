@@ -10,21 +10,9 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from .models import Room, Booking
-from .forms import AvailabilityForm
+from .forms import AvailabilityForm, CreateBookingForm, CreateGuestForm
 
 # Generic views ——————————————————————————————
-
-class CreateBooking(CreateView):
-    model = Booking
-    fields = '__all__'
-    success_url = '/bookings'
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.user = self.request.user
-        self.object.save()
-        return HttpResponseRedirect('/bookings')
-
 
 class BookingUpdate(UpdateView):
     model = Booking
@@ -43,9 +31,16 @@ class BookingDelete(DeleteView):
 
 # Create your views here.
 
+def index(request):
+    form = AvailabilityForm()
+    return render(request, 'index.html', {'form': form})
+
 def book(request):
     check_in_date = request.GET.get('check_in_date')
     check_out_date = request.GET.get('check_out_date')
+    request.session['check_in_date'] = check_in_date
+    request.session['check_out_date'] = check_out_date
+    request.session['total_guests'] = request.GET.get('total_guests')
     available_rooms = Room.objects.exclude(
         Q(booking__check_in_date__range=(check_in_date, check_out_date)) 
     ).exclude(
@@ -64,13 +59,24 @@ def book(request):
             results[room.room_type] = bed_types
     return render(request, 'book/index.html', {'results': results})
 
-def book_guest_details(request, room_number):
-    return render(request, 'book/guest_details.html', {'room_number': room_number})
-
-
-def index(request):
-    form = AvailabilityForm()
-    return render(request, 'index.html', {'form': form})
+def create_booking(request, room_number):
+    if request.method == 'POST':
+        form = CreateGuestForm(request.POST)
+        if form.is_valid():
+            new_guest = form.save()
+            room = Room.objects.get(number=room_number)
+            new_booking = Booking(
+                guest=new_guest,
+                room=room,
+                check_in_date=(request.session['check_in_date']),
+                check_out_date=(request.session['check_out_date']),
+                total_guests=(request.session['total_guests'])
+            )
+            new_booking.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = CreateGuestForm()
+        return render(request, 'book/create_booking.html', {'form': form})
 
 
 def about(request):
