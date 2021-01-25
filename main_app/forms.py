@@ -10,7 +10,7 @@ class AvailabilityForm(ModelForm):
             'check_out_date': DateInput(attrs={'class': 'datepicker'})
         }
 
-class GuestCreationForm(ModelForm):
+class GuestForm(ModelForm):
     class Meta:
         model = Guest
         fields = '__all__'

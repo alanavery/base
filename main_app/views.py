@@ -10,32 +10,81 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from .models import Guest, GuestId, Room, Booking
-from .forms import AvailabilityForm, CreateBookingForm, GuestCreationForm
-
-# Generic views ——————————————————————————————
-
-
-class BookingUpdate(UpdateView):
-    model = Booking
-    fields = ['check_in_date', 'check_out_date', 'total_guests']
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
-        return HttpResponseRedirect(f'/bookings/{str(self.object.pk)}')
-
-
-@method_decorator(login_required, name='dispatch')
-class BookingDelete(DeleteView):
-    model = Booking
-    success_url = '/bookings'
-
-# Create your views here.
+from .forms import AvailabilityForm, CreateBookingForm, GuestForm
 
 
 def index(request):
     form = AvailabilityForm()
     return render(request, 'index.html', {'form': form})
+
+
+def signup(request):
+    # /signup (POST)
+    if request.method == 'POST':
+        user_form = UserCreationForm(request.POST)
+        guest_form = GuestForm(request.POST)
+        if user_form.is_valid() and guest_form.is_valid:
+            user = user_form.save()
+            guest = guest_form.save()
+            guest_id = GuestId(
+                user=user,
+                guest=guest
+            )
+            guest_id.save()
+            login(request, user)
+            return HttpResponseRedirect('/profile')
+
+    # /signup (GET)
+    else:
+        user_form = UserCreationForm(request.POST)
+        guest_form = GuestForm(request.POST)
+        return render(request, 'signup.html', {
+            'user_form': user_form,
+            'guest_form': guest_form
+        })
+
+
+def login_view(request):
+    # /login (POST)
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            u = form.cleaned_data['username']
+            p = form.cleaned_data['password']
+            user = authenticate(username=u, password=p)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect('/profile')
+                else:
+                    print('The account has been disabled.')
+            else:
+                print('The username and/or password is incorrect.')
+
+    # /login (GET)
+    else:
+        form = AuthenticationForm()
+        return render(request, 'login.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+
+@login_required
+def profile(request):
+    user = request.user
+    guest = user.guestid.guest
+    bookings = Booking.objects.filter(guest=guest)
+    return render(request, 'profile.html', {
+        'user': user,
+        'guest': guest,
+        'bookings': bookings
+    })
+
+
+# Booking process ——————————————————————————————
 
 
 def book(request):
@@ -64,41 +113,44 @@ def book(request):
 
 
 def create_booking(request, room_number):
+    # /book/:room_number (POST)
     if request.method == 'POST':
-        form = GuestCreationForm(request.POST)
-        if form.is_valid():
-            guest = form.save()
-            room = Room.objects.get(number=room_number)
-            booking = Booking(
-                guest=guest,
-                room=room,
-                check_in_date=(request.session['check_in_date']),
-                check_out_date=(request.session['check_out_date']),
-                total_guests=(request.session['total_guests'])
-            )
-            booking.save()
-            return HttpResponseRedirect(f'/book/confirmation/{booking.id}')
+        if request.user.is_authenticated:
+            guest = request.user.guestid.guest
+            form = GuestForm(request.POST, instance=guest)
+            if form.is_valid():
+                guest = form.save()
+            else:
+                print('Unable to update guest details—invalid form.')
+        else:
+            form = GuestForm(request.POST)
+            if form.is_valid():
+                guest = form.save()
+        room = Room.objects.get(number=room_number)
+        booking = Booking(
+            guest=guest,
+            room=room,
+            check_in_date=(request.session['check_in_date']),
+            check_out_date=(request.session['check_out_date']),
+            total_guests=(request.session['total_guests'])
+        )
+        booking.save()
+        return HttpResponseRedirect(f'/book/confirmation/{booking.id}')
+
+    # /book/:room_number (GET)
     else:
         if request.user.is_authenticated:
             guest = request.user.guestid.guest
-            form = GuestCreationForm({
-                'first_name': guest.first_name,
-                'last_name': guest.last_name,
-                'email': guest.email,
-                'phone': guest.phone,
-                'street': guest.street,
-                'city': guest.city,
-                'state': guest.state,
-                'zip_code': guest.zip_code,
-                'country': guest.country
-            })
+            form = GuestForm(instance=guest)
         else:
-            form = GuestCreationForm()
+            form = GuestForm()
         return render(request, 'book/create_booking.html', {'form': form})
 
 
 def book_confirmation(request, booking_id):
     booking = Booking.objects.get(id=booking_id)
+    
+    # /book/confirmation/:booking_id (POST)
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -110,76 +162,18 @@ def book_confirmation(request, booking_id):
             guest_id.save()
             login(request, user)    
             return HttpResponseRedirect('/profile')
+
+    # /book/confirmation/:booking_id (GET)
     else:
         form = UserCreationForm()
         return render(request, 'book/confirmation.html', {'booking': booking, 'form': form})
 
 
-def signup(request):
-    if request.method == 'POST':
-        user_form = UserCreationForm(request.POST)
-        guest_form = GuestCreationForm(request.POST)
-        if user_form.is_valid() and guest_form.is_valid:
-            user = user_form.save()
-            guest = guest_form.save()
-            guest_id = GuestId(
-                user=user,
-                guest=guest
-            )
-            guest_id.save()
-            login(request, user)
-            return HttpResponseRedirect('/profile')
-    else:
-        user_form = UserCreationForm(request.POST)
-        guest_form = GuestCreationForm(request.POST)
-        return render(request, 'signup.html', {
-            'user_form': user_form,
-            'guest_form': guest_form
-        })
+# def bookings_index(request):
+#     bookings = Booking.objects.all()
+#     return render(request, 'bookings/index.html', {'bookings': bookings})
 
 
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
-        if form.is_valid():
-            u = form.cleaned_data['username']
-            p = form.cleaned_data['password']
-            user = authenticate(username=u, password=p)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponseRedirect('/profile')
-                else:
-                    print('The account has been disabled.')
-            else:
-                print('The username and/or password is incorrect.')
-    else:
-        form = AuthenticationForm()
-        return render(request, 'login.html', {'form': form})
-
-
-def logout_view(request):
-    logout(request)
-    return HttpResponseRedirect('/')
-
-
-@login_required
-def profile(request):
-    user = request.user
-    guest = user.guestid.guest
-    bookings = Booking.objects.filter(guest=guest)
-    return render(request, 'profile.html', {
-        'user': user,
-        'guest': guest,
-        'bookings': bookings
-    })
-
-
-def bookings_index(request):
-    bookings = Booking.objects.all()
-    return render(request, 'bookings/index.html', {'bookings': bookings})
-
-
-def bookings_details(request, booking_id):
-    booking = Booking.objects.get(id=booking_id)
-    return render(request, 'bookings/details.html', {'booking': booking})
+# def bookings_details(request, booking_id):
+#     booking = Booking.objects.get(id=booking_id)
+#     return render(request, 'bookings/details.html', {'booking': booking})
