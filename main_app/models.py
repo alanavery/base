@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class Guest(models.Model):
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     phone = models.CharField(max_length=150)
     street = models.CharField(max_length=150)
     city = models.CharField(max_length=150)
@@ -37,13 +37,14 @@ class Room(models.Model):
 
 
 class Booking(models.Model):
+    TOTAL_GUESTS_CHOICES = [(1, 1),(2, 2),(3, 3),(4, 4)]
     guest = models.ForeignKey(Guest, on_delete=models.SET_NULL, null=True)
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True)
     check_in_date = models.DateField()
     check_in_time = models.TimeField(default='15:00:00')
     check_out_date = models.DateField()
     check_out_time = models.TimeField(default='12:00:00')
-    total_guests = models.PositiveIntegerField()
+    total_guests = models.PositiveIntegerField(choices=TOTAL_GUESTS_CHOICES, default=1)
     rate = models.FloatField(default=100)
     paid = models.BooleanField(default=False)
 

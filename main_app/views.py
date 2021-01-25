@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from .models import Guest, GuestId, Room, Booking
-from .forms import AvailabilityForm, CreateBookingForm, CreateGuestForm
+from .forms import AvailabilityForm, CreateBookingForm, GuestCreationForm
 
 # Generic views ——————————————————————————————
 
@@ -65,21 +65,35 @@ def book(request):
 
 def create_booking(request, room_number):
     if request.method == 'POST':
-        form = CreateGuestForm(request.POST)
+        form = GuestCreationForm(request.POST)
         if form.is_valid():
-            new_guest = form.save()
+            guest = form.save()
             room = Room.objects.get(number=room_number)
-            new_booking = Booking(
-                guest=new_guest,
+            booking = Booking(
+                guest=guest,
                 room=room,
                 check_in_date=(request.session['check_in_date']),
                 check_out_date=(request.session['check_out_date']),
                 total_guests=(request.session['total_guests'])
             )
-            new_booking.save()
-            return HttpResponseRedirect(f'/book/confirmation/{new_booking.id}')
+            booking.save()
+            return HttpResponseRedirect(f'/book/confirmation/{booking.id}')
     else:
-        form = CreateGuestForm()
+        if request.user.is_authenticated:
+            guest = request.user.guestid.guest
+            form = GuestCreationForm({
+                'first_name': guest.first_name,
+                'last_name': guest.last_name,
+                'email': guest.email,
+                'phone': guest.phone,
+                'street': guest.street,
+                'city': guest.city,
+                'state': guest.state,
+                'zip_code': guest.zip_code,
+                'country': guest.country
+            })
+        else:
+            form = GuestCreationForm()
         return render(request, 'book/create_booking.html', {'form': form})
 
 
@@ -89,11 +103,11 @@ def book_confirmation(request, booking_id):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            new_guest_id = GuestId(
+            guest_id = GuestId(
                 user=user,
                 guest=booking.guest
             )
-            new_guest_id.save()
+            guest_id.save()
             login(request, user)    
             return HttpResponseRedirect('/profile')
     else:
@@ -103,14 +117,25 @@ def book_confirmation(request, booking_id):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
+        user_form = UserCreationForm(request.POST)
+        guest_form = GuestCreationForm(request.POST)
+        if user_form.is_valid() and guest_form.is_valid:
+            user = user_form.save()
+            guest = guest_form.save()
+            guest_id = GuestId(
+                user=user,
+                guest=guest
+            )
+            guest_id.save()
             login(request, user)
             return HttpResponseRedirect('/profile')
     else:
-        form = UserCreationForm()
-        return render(request, 'signup.html', {'form': form})
+        user_form = UserCreationForm(request.POST)
+        guest_form = GuestCreationForm(request.POST)
+        return render(request, 'signup.html', {
+            'user_form': user_form,
+            'guest_form': guest_form
+        })
 
 
 def login_view(request):
