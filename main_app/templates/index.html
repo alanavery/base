@@ -4,13 +4,14 @@
 {% block content %}
 
 <div class="col">
-  <section class="row justify-content-center py-5 section-welcome">
-    <div class="col-6 text-white">
+  <section id="welcome" class="row justify-content-center py-5">
+    <div class="col-4 text-white">
       <h1>Welcome</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin. Sit amet cursus sit amet dictum sit amet justo.</p>
     </div>
-    <div class="col-4 bg-white">
-      <h2>Check Availability</h2>
+    
+    <div class="col-3 offset-3 p-3 bg-white">
+      <h2>Book Your Stay</h2>
       <form action="{% url 'book' %}" method="get">
         {% for field in form %}
           <div class="form-floating mb-3">
@@ -18,12 +19,12 @@
             {{ field.label_tag }}
           </div>
         {% endfor %}
-        <input type="submit" value="Search">
+        <input class="btn btn-primary" type="submit" value="Search">
       </form>
     </div>
   </section>
   
-  <section class="row justify-content-center py-5">
+  <section id="about" class="row justify-content-center py-5">
     <div class="col-10">
       <div class="row text-center">
         <h1>About Our Hotel</h1>
@@ -39,7 +40,7 @@
     </div>
   </section>
   
-  <section class="row bg-light justify-content-center py-5">
+  <section id="rooms" class="row bg-light justify-content-center py-5">
     <div class="col-10">
       <div class="row text-center">
         <h1>Rooms</h1>
@@ -65,7 +66,7 @@
     </div>
   </section>
   
-  <section class="row justify-content-center py-5">
+  <section id="amenities" class="row justify-content-center py-5">
     <div class="col-10">
       <div class="row text-center">
         <h1>Amenities</h1>
@@ -102,7 +103,7 @@
     </div>
   </section>
   
-  <section class="row bg-light justify-content-center py-5">
+  <section id="neighborhood" class="row bg-light justify-content-center py-5">
     <div class="col-10">
       <div class="row text-center">
         <h1>Neighborhood</h1>

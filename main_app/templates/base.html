@@ -14,7 +14,7 @@
   
   <body>
     <div class="container">
-      <header class="row">
+      <header class="row sticky-top">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <a class="navbar-brand" href="/">Base</a>
           
@@ -22,7 +22,22 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/#about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/#rooms">Rooms</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/#amenities">Amenities</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/#neighborhood">Neighborhood</a>
+              </li>
+            </ul>
+
             <ul class="navbar-nav">
               {% if user.is_authenticated %}
               <li class="nav-item">
@@ -49,7 +64,7 @@
         {% endblock %}
       </main>
   
-      <footer class="row bg-dark text-white">© 2021 Base, Inc.</footer>
+      <footer class="row p-5 bg-dark text-white">© 2021 Base, Inc.</footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
