@@ -9,10 +9,11 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from .models import Room, Booking
+from .models import Guest, GuestId, Room, Booking
 from .forms import AvailabilityForm, CreateBookingForm, CreateGuestForm
 
 # Generic views ——————————————————————————————
+
 
 class BookingUpdate(UpdateView):
     model = Booking
@@ -31,9 +32,11 @@ class BookingDelete(DeleteView):
 
 # Create your views here.
 
+
 def index(request):
     form = AvailabilityForm()
     return render(request, 'index.html', {'form': form})
+
 
 def book(request):
     check_in_date = request.GET.get('check_in_date')
@@ -42,7 +45,7 @@ def book(request):
     request.session['check_out_date'] = check_out_date
     request.session['total_guests'] = request.GET.get('total_guests')
     available_rooms = Room.objects.exclude(
-        Q(booking__check_in_date__range=(check_in_date, check_out_date)) 
+        Q(booking__check_in_date__range=(check_in_date, check_out_date))
     ).exclude(
         Q(booking__check_out_date__range=(check_in_date, check_out_date))
     )
@@ -59,6 +62,7 @@ def book(request):
             results[room.room_type] = bed_types
     return render(request, 'book/index.html', {'results': results})
 
+
 def create_booking(request, room_number):
     if request.method == 'POST':
         form = CreateGuestForm(request.POST)
@@ -73,14 +77,28 @@ def create_booking(request, room_number):
                 total_guests=(request.session['total_guests'])
             )
             new_booking.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(f'/book/confirmation/{new_booking.id}')
     else:
         form = CreateGuestForm()
         return render(request, 'book/create_booking.html', {'form': form})
 
 
-def about(request):
-    return render(request, 'about.html')
+def book_confirmation(request, booking_id):
+    booking = Booking.objects.get(id=booking_id)
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            new_guest_id = GuestId(
+                user=user,
+                guest=booking.guest
+            )
+            new_guest_id.save()
+            login(request, user)    
+            return HttpResponseRedirect('/profile')
+    else:
+        form = UserCreationForm()
+        return render(request, 'book/confirmation.html', {'booking': booking, 'form': form})
 
 
 def signup(request):
@@ -122,10 +140,14 @@ def logout_view(request):
 
 @login_required
 def profile(request):
-    username = request.user
-    user = User.objects.get(username=username)
-    bookings = Booking.objects.filter(user=user)
-    return render(request, 'profile.html', {'username': username, 'bookings': bookings})
+    user = request.user
+    guest = user.guestid.guest
+    bookings = Booking.objects.filter(guest=guest)
+    return render(request, 'profile.html', {
+        'user': user,
+        'guest': guest,
+        'bookings': bookings
+    })
 
 
 def bookings_index(request):

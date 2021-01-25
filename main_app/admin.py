@@ -11,11 +11,14 @@ class GuestIdInline(admin.StackedInline):
 class UserAdmin(BaseUserAdmin):
     inlines = (GuestIdInline,)
 
+class GuestAdmin(admin.ModelAdmin):
+    list_display = ('id', 'first_name', 'last_name')
+
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('guest', 'room', 'check_in_date', 'check_out_date')
+    list_display = ('id', 'guest', 'room', 'check_in_date', 'check_out_date')
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-admin.site.register(Guest)
+admin.site.register(Guest, GuestAdmin)
 admin.site.register(Room)
 admin.site.register(Booking, BookingAdmin)
