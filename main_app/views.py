@@ -14,7 +14,7 @@ from .forms import AvailabilityForm, CreateBookingForm, GuestForm
 
 
 def index(request):
-    form = AvailabilityForm()
+    form = AvailabilityForm(label_suffix='')
     return render(request, 'index.html', {'form': form})
 
 
