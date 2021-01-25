@@ -1,0 +1,10 @@
+[
+  {
+    "model": "main_app.guestid",
+    "pk": 1,
+    "fields": {
+      "guest_id": 1,
+      "user_id": 2
+    }
+  }
+]

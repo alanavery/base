@@ -1,0 +1,13 @@
+[
+  {
+    "model": "main_app.booking",
+    "pk": 1,
+    "fields": {
+      "check_in_date": "2021-03-01",
+      "check_out_date": "2021-03-03",
+      "total_guests": 2,
+      "guest_id": 1,
+      "room_id": 20
+    }
+  }
+]

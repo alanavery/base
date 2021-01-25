@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h2>Confirmation</h2>
+
+<h3>Booking #{{ booking.id }}</h3>
+<p>{{ booking.check_in_date }}</p>
+<p>{{ booking.check_out_date }}</p>
+
+{% if not user.is_authenticated %}
+<h3>Sign up for an account to manage your bookings.</h3>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Submit" />
+</form>
+{% endif %}
+
+{% endblock %}

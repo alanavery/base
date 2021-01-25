@@ -4,9 +4,6 @@
 
 {% block content %}
 <h2>Bookings</h2>
-<hr />
-<p><a href="/bookings/create">Book a Stay</a></p>
-<hr />
 {% for booking in bookings %}
 <h3>
   <a href="/bookings/{{ booking.id }}">Booking #{{ booking }}</a>
@@ -14,7 +11,6 @@
 <p>Booked By: {{ booking.user.username }}</p>
 <p>Check-In: {{ booking.check_in_date }}</p>
 <p>Check-Out: {{ booking.check_out_date }}</p>
-<hr />
 <!-- prettier-ignore -->
 {% endfor %}
 {% endblock %}

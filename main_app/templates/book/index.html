@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h2>Pick a Room</h2>
+
+{% for room_type, bed_types in results.items %}
+<div>
+  <h3>{{ room_type }}</h3>
+  <ul>
+    {% for bed_type, rooms in bed_types.items %}
+    <li>{{ bed_type }} <a href="/book/{{ rooms.0 }}"><button>Book</button></a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endfor %}
+
+{% endblock %}

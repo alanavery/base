@@ -1,0 +1,242 @@
+[
+  {
+    "model": "main_app.room",
+    "pk": 1,
+    "fields": {
+      "number": 101,
+      "room_type": "standard, street view",
+      "beds": "1 king",
+      "accessible": true,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 2,
+    "fields": {
+      "number": 102,
+      "room_type": "standard, courtyard view",
+      "beds": "2 queens",
+      "accessible": true,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 3,
+    "fields": {
+      "number": 103,
+      "room_type": "standard, street view",
+      "beds": "2 queens",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 4,
+    "fields": {
+      "number": 104,
+      "room_type": "standard, courtyard view",
+      "beds": "1 king",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 5,
+    "fields": {
+      "number": 105,
+      "room_type": "standard, street view",
+      "beds": "1 king",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 6,
+    "fields": {
+      "number": 106,
+      "room_type": "standard, courtyard view",
+      "beds": "2 queens",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 7,
+    "fields": {
+      "number": 107,
+      "room_type": "standard, street view",
+      "beds": "2 queens",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 8,
+    "fields": {
+      "number": 108,
+      "room_type": "standard, courtyard view",
+      "beds": "1 king",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 9,
+    "fields": {
+      "number": 109,
+      "room_type": "suite, street view",
+      "beds": "1 king",
+      "accessible": true,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 10,
+    "fields": {
+      "number": 110,
+      "room_type": "suite, courtyard view",
+      "beds": "2 queens",
+      "accessible": true,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 11,
+    "fields": {
+      "number": 201,
+      "room_type": "standard, street view",
+      "beds": "2 queens",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 12,
+    "fields": {
+      "number": 202,
+      "room_type": "standard, courtyard view",
+      "beds": "1 king",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 13,
+    "fields": {
+      "number": 203,
+      "room_type": "standard, street view",
+      "beds": "1 king",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 14,
+    "fields": {
+      "number": 204,
+      "room_type": "standard, courtyard view",
+      "beds": "2 queens",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 15,
+    "fields": {
+      "number": 205,
+      "room_type": "standard, street view",
+      "beds": "2 queens",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 16,
+    "fields": {
+      "number": 206,
+      "room_type": "standard, courtyard view",
+      "beds": "1 king",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 17,
+    "fields": {
+      "number": 207,
+      "room_type": "standard, street view",
+      "beds": "1 king",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 18,
+    "fields": {
+      "number": 208,
+      "room_type": "standard, courtyard view",
+      "beds": "2 queens",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 19,
+    "fields": {
+      "number": 209,
+      "room_type": "suite, street view",
+      "beds": "2 queens",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  },
+  {
+    "model": "main_app.room",
+    "pk": 20,
+    "fields": {
+      "number": 210,
+      "room_type": "suite, courtyard view",
+      "beds": "1 king",
+      "accessible": false,
+      "occupied": false,
+      "spotless": true
+    }
+  }
+]

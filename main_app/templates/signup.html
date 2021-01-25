@@ -1,14 +1,14 @@
-<!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
-<h2>Sign Up</h2>
-<form method="post">
-  <!-- prettier-ignore -->
-  {% csrf_token %}
-  {{ form.as_p }}
 
+<h2>Sign Up</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ user_form.as_p }}
+  {{ guest_form.as_p }}
   <input type="submit" value="Submit" />
 </form>
+
 {% endblock %}

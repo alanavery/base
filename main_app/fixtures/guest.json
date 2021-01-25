@@ -1,0 +1,17 @@
+[
+  {
+    "model": "main_app.guest",
+    "pk": 1,
+    "fields": {
+      "first_name": "Alan",
+      "last_name": "Avery",
+      "email": "delayedaa@gmail.com",
+      "phone": "2605802216",
+      "street": "540 W Briar Pl Apt 5J",
+      "city": "Chicago",
+      "state": "IL",
+      "zip_code": "60657",
+      "country": "United States"
+    }
+  }
+]

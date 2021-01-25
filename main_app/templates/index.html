@@ -1,9 +1,12 @@
-<!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
-<p>
-  <a href="/bookings">View Bookings</a>
-</p>
+
+<h2>Check Availability</h2>
+
+<form action="{% url 'book' %}" method="get">
+  {{ form }}
+  <input type="submit" value="Search">
+</form>
+
 {% endblock %}
