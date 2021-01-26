@@ -2,29 +2,84 @@
 {% load static %}
 {% block content %}
 
-<h2>{{ guest.first_name }}'s Bookings</h2>
+<section class="row">
+  <div class="col">
+    <h1>{{ guest.first_name }}'s Profile</h1>
 
-<h3>Account Settings</h3>
-<p>Username: {{ user.username }}</p>
+    <div class="row">
+      <div class="col-4 bg-light p-3">
+        <h2>Account Settings</h2>
+        <form action="{% url 'update_user' %}" method="post">
+          {% csrf_token %}
+          {% for field in user_form %}
+          <div class="form-floating mb-3">
+            {{ field }}
+            {{ field.label_tag }}
+          </div>
+          {% endfor %}
+          <input class="btn btn-primary" type="submit" value="Update">
+        </form>
+      </div>
 
-<h3>Guest Details</h3>
-<p>First Name: {{ guest.first_name }}</p>
-<p>Last Name: {{ guest.last_name }}</p>
-<p>Email: {{ guest.email }}</p>
-<p>Phone: {{ guest.phone }}</p>
-<p>Street: {{ guest.street }}</p>
-<p>City: {{ guest.city }}</p>
-<p>State: {{ guest.state }}</p>
-<p>Zip Code: {{ guest.zip_code }}</p>
-<p>Country: {{ guest.country }}</p>
+      <div class="col-8 bg-light p-3">
+        <h2>Guest Details</h2>
+        <form action="{% url 'update_guest' %}" method="post">
+          <div class="form-columns-2">
+            {% csrf_token %}
+            {% for field in guest_form %}
+            <div class="form-floating mb-3">
+              {{ field }}
+              {{ field.label_tag }}
+            </div>
+            {% endfor %}
+          </div>
+          <input class="btn btn-primary" type="submit" value="Update">
+        </form>
+      </div>
+    </div>
 
-<h3>Bookings</h3>
-{% for booking in bookings %}
-<h4>
-  <a href="/bookings/{{ booking.id }}">Booking #{{ booking }}</a>
-</h4>
-<p>Check-In: {{ booking.check_in_date }}</p>
-<p>Check-Out: {{ booking.check_out_date }}</p>
-{% endfor %}
+    <div class="row">
+      <div class="col">
+        <h2>Bookings</h2>
+        <div class="row row-cols-1 row-cols-lg-2">
+          {% for booking in bookings %}
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="card-body">
+                  <h3 class="card-title">Booking #{{ booking.id }}</h3>
+                  <h4 class="card-text">Check-In Date: {{ booking.check_in_date }}</h4>
+                  <h4 class="card-text">Check-Out Date: {{ booking.check_out_date }}</h4>
+                  <ul class="list-unstyled">
+                    <li class="card-text">Number of Guests: {{ booking.total_guests }}</li>
+                    <li class="card-text">Room Type: {{ booking.room.room_type }}</li>
+                    <li class="card-text">Beds: {{ booking.room.beds }}</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                {% if booking.room.room_type == 'standard, street view' %}
+                <img class="img-fluid"
+                  src="https://res.cloudinary.com/alanavery/image/upload/v1611631295/base/room-1-1.jpg" alt="">
+                {% elif booking.room.room_typ == 'standard, courtyard view' %}
+                <img class="img-fluid"
+                  src="https://res.cloudinary.com/alanavery/image/upload/v1611631294/base/room-2-1.jpg" alt="">
+                {% elif booking.room.room_typ == 'suite, street view' %}
+                <img class="img-fluid"
+                  src="https://res.cloudinary.com/alanavery/image/upload/v1611631295/base/room-3-1.jpg" alt="">
+                {% else %}
+                <img class="img-fluid"
+                  src="https://res.cloudinary.com/alanavery/image/upload/v1611631295/base/room-4-1.jpg" alt="">
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

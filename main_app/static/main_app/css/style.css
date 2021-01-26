@@ -1,0 +1,11 @@
+#welcome {
+  background-image: url('../images/The\ Nest\ -\ 1920\ x\ 1080.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+.form-columns-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
+}

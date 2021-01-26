@@ -77,11 +77,31 @@ def profile(request):
     user = request.user
     guest = user.guestid.guest
     bookings = Booking.objects.filter(guest=guest)
+    user_form = SignupForm(instance=user, label_suffix='')
+    guest_form = GuestForm(instance=guest, label_suffix='')
     return render(request, 'profile.html', {
         'user': user,
         'guest': guest,
-        'bookings': bookings
+        'bookings': bookings,
+        'user_form': user_form,
+        'guest_form': guest_form
     })
+
+
+def update_user(request):
+    user = request.user
+    form = SignupForm(request.POST, instance=user)
+    if form.is_valid():
+        user = form.save()
+        return HttpResponseRedirect('/')
+
+
+def update_guest(request):
+    guest = request.user.guestid.guest
+    form = GuestForm(request.POST, instance=guest)
+    if form.is_valid():
+        guest = form.save()
+        return HttpResponseRedirect('/profile')
 
 
 # Booking process ——————————————————————————————
@@ -89,31 +109,34 @@ def profile(request):
 
 def book(request):
     form = AvailabilityForm(label_suffix='')
-    check_in_date = request.GET.get('check_in_date')
-    check_out_date = request.GET.get('check_out_date')
-    request.session['check_in_date'] = check_in_date
-    request.session['check_out_date'] = check_out_date
-    request.session['total_guests'] = request.GET.get('total_guests')
-    available_rooms = Room.objects.exclude(
-        Q(booking__check_in_date__range=(check_in_date, check_out_date))
-    ).exclude(
-        Q(booking__check_out_date__range=(check_in_date, check_out_date))
-    )
-    results = {}
-    for room in available_rooms:
-        if room.room_type in results.keys():
-            if room.beds in results[room.room_type].keys():
-                results[room.room_type][room.beds].append(room)
+    if not request.GET:
+        return render(request, 'book/index.html', {'form': form})
+    else:
+        check_in_date = request.GET.get('check_in_date')
+        check_out_date = request.GET.get('check_out_date')
+        request.session['check_in_date'] = check_in_date
+        request.session['check_out_date'] = check_out_date
+        request.session['total_guests'] = request.GET.get('total_guests')
+        available_rooms = Room.objects.exclude(
+            Q(booking__check_in_date__range=(check_in_date, check_out_date))
+        ).exclude(
+            Q(booking__check_out_date__range=(check_in_date, check_out_date))
+        )
+        results = {}
+        for room in available_rooms:
+            if room.room_type in results.keys():
+                if room.beds in results[room.room_type].keys():
+                    results[room.room_type][room.beds].append(room)
+                else:
+                    results[room.room_type][room.beds] = [room]
             else:
-                results[room.room_type][room.beds] = [room]
-        else:
-            bed_types = {}
-            bed_types[room.beds] = [room]
-            results[room.room_type] = bed_types
-    return render(request, 'book/index.html', {
-        'form': form,
-        'results': results
-    })
+                bed_types = {}
+                bed_types[room.beds] = [room]
+                results[room.room_type] = bed_types
+        return render(request, 'book/index.html', {
+            'form': form,
+            'results': results
+        })
 
 
 def create_booking(request, room_number):
@@ -175,13 +198,3 @@ def book_confirmation(request, booking_id):
     else:
         form = SignupForm(label_suffix='')
         return render(request, 'book/confirmation.html', {'booking': booking, 'form': form})
-
-
-# def bookings_index(request):
-#     bookings = Booking.objects.all()
-#     return render(request, 'bookings/index.html', {'bookings': bookings})
-
-
-# def bookings_details(request, booking_id):
-#     booking = Booking.objects.get(id=booking_id)
-#     return render(request, 'bookings/details.html', {'booking': booking})
