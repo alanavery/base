@@ -1,5 +1,18 @@
-from django.forms import ModelForm, DateInput, Select, TextInput, EmailInput
+from django.forms import ModelForm, DateInput, Select, TextInput, EmailInput, PasswordInput
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
+
 from .models import Guest, Booking
+
+
+class SignupForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["username"].widget.attrs["class"] = "form-control"
+        self.fields["password1"].widget.attrs["class"] = "form-control"
+        self.fields["password2"].widget.attrs["class"] = "form-control"
+        self.fields["password2"].label = 'Password Confirmation'
+
 
 class AvailabilityForm(ModelForm):
     class Meta:
@@ -24,6 +37,7 @@ class AvailabilityForm(ModelForm):
                 'placeholder': '1'
             })
         }
+
 
 class GuestForm(ModelForm):
     class Meta:
@@ -72,6 +86,7 @@ class GuestForm(ModelForm):
                 'placeholder': 'United States'
             })
         }
+
 
 class CreateBookingForm(ModelForm):
     class Meta:

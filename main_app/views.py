@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from .models import Guest, GuestId, Room, Booking
-from .forms import AvailabilityForm, CreateBookingForm, GuestForm
+from .forms import AvailabilityForm, CreateBookingForm, GuestForm, SignupForm
 
 
 def index(request):
@@ -157,7 +157,7 @@ def create_booking(request, room_number):
 
 def book_confirmation(request, booking_id):
     booking = Booking.objects.get(id=booking_id)
-    
+
     # /book/confirmation/:booking_id (POST)
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -168,12 +168,12 @@ def book_confirmation(request, booking_id):
                 guest=booking.guest
             )
             guest_id.save()
-            login(request, user)    
+            login(request, user)
             return HttpResponseRedirect('/profile')
 
     # /book/confirmation/:booking_id (GET)
     else:
-        form = UserCreationForm()
+        form = SignupForm(label_suffix='')
         return render(request, 'book/confirmation.html', {'booking': booking, 'form': form})
 
 

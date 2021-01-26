@@ -1,0 +1,48 @@
+{% extends 'book/confirmation.html' %}
+{% load static %}
+{% block amenities %}
+
+<section id="amenities" class="row justify-content-center py-5">
+  <div class="col-10">
+    <div class="row text-center">
+      <h1>Amenities</h1>
+    </div>
+    <div class="row row-cols-3">
+      <div class="col">
+        <div class="card">
+          <img class="card-img-top" src="{% static 'main_app/images/191105_THH_0122_LR_RT.jpg' %}" alt="">
+          <div class="card-body">
+            <h3 class="card-title">Bar and Lounge</h3>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin. Sit amet cursus
+              sit amet dictum sit amet justo.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img class="card-img-top" src="{% static 'main_app/images/191106_THH_35517_LR.jpg' %}" alt="">
+          <div class="card-body">
+            <h3 class="card-title">Courtyard Garden</h3>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin. Sit amet cursus
+              sit amet dictum sit amet justo.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img class="card-img-top" src="{% static 'main_app/images/treehouse_london_2020_rushed_16.jpg' %}" alt="">
+          <div class="card-body">
+            <h3 class="card-title">Meeting Room</h3>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin. Sit amet cursus
+              sit amet dictum sit amet justo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
