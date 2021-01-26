@@ -117,6 +117,8 @@ def book(request):
 
 
 def create_booking(request, room_number):
+    room = Room.objects.get(number=room_number)
+
     # /book/:room_number (POST)
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -130,7 +132,6 @@ def create_booking(request, room_number):
             form = GuestForm(request.POST)
             if form.is_valid():
                 guest = form.save()
-        room = Room.objects.get(number=room_number)
         booking = Booking(
             guest=guest,
             room=room,
@@ -147,8 +148,11 @@ def create_booking(request, room_number):
             guest = request.user.guestid.guest
             form = GuestForm(instance=guest)
         else:
-            form = GuestForm()
-        return render(request, 'book/create_booking.html', {'form': form})
+            form = GuestForm(label_suffix='')
+        return render(request, 'book/create_booking.html', {
+            'room': room,
+            'form': form
+        })
 
 
 def book_confirmation(request, booking_id):
