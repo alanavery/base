@@ -88,6 +88,7 @@ def profile(request):
 
 
 def book(request):
+    form = AvailabilityForm(label_suffix='')
     check_in_date = request.GET.get('check_in_date')
     check_out_date = request.GET.get('check_out_date')
     request.session['check_in_date'] = check_in_date
@@ -109,7 +110,10 @@ def book(request):
             bed_types = {}
             bed_types[room.beds] = [room]
             results[room.room_type] = bed_types
-    return render(request, 'book/index.html', {'results': results})
+    return render(request, 'book/index.html', {
+        'form': form,
+        'results': results
+    })
 
 
 def create_booking(request, room_number):

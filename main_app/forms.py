@@ -8,7 +8,7 @@ class AvailabilityForm(ModelForm):
         labels = {
             'check_in_date': 'Check-In Date',
             'check_out_date': 'Check-Out Date',
-            'total_guests': 'Total Guests'
+            'total_guests': 'Number of Guests'
         }
         widgets = {
             'check_in_date': DateInput(attrs={
