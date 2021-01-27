@@ -1,40 +1,38 @@
 # Base
 
-Hotel website and hotel management app
+### Hotel website and hotel management app
+
+A two-sided hotel app, with one side focused on future and current guests, and a second side built for hotel employees. The public-facing side shows off the hotel and its amenities. It also allows users to create an account, make reservations, and update guest details. The employee-only side, which takes advantage of Django's built-in admin features, allows specific users to manage all of the hotel’s reservations, as well as the accounts of guests. It even includes a simple housekeeping system that tracks which rooms have been cleaned.
+
+---
 
 ## Planning
 
+Initial planning for the app consisted of three elements: wireframes, user stories and an entity relationship diagram (ERD) for mapping out the structure of the database.
+
 ### Wireframes
 
+<!-- prettier-ignore -->
 URL: /
 ![Home page wireframe](planning/wireframes/guest-home.png)
-
 URL: /booking/step1
 ![Booking step 1 page wireframe](planning/wireframes/guest-booking-step1.png)
-
 URL: /booking/step2
 ![Booking step 2 page wireframe](planning/wireframes/guest-booking-step2.png)
-
 URL: /booking/:id/confirmation
 ![Booking confirmation page wireframe](planning/wireframes/guest-booking-confirmation.png)
-
 URL: /create-account
 ![Create account page wireframe](planning/wireframes/guest-create-account.png)
-
 URL: /guest/:id/profile
 ![Profile page wireframe](planning/wireframes/guest-profile.png)
-
-URL: /employee/:id
-![Employee dashboard wireframe](planning/wireframes/employee-dashboard.png)
-
-URL: /employee/:id/booking/:id
-![Booking details page wireframe](planning/wireframes/employee-booking-details.png)
 
 ### Database ERD
 
 ![Database ERD](planning/erd/base-erd.png)
 
 ### User Stories
+
+Given that there are two different interfaces, two categories of user stories are required: guests and employees.
 
 <!-- prettier-ignore -->
 | Story | Type |
@@ -51,3 +49,46 @@ URL: /employee/:id/booking/:id
 | As an employee who manages bookings, I want to be able to add notes to a booking, as well as a guest's profile, so I can record guest requests and preferences. | Employee |
 | As a housekeeping employee, I want to see a list or graph of the rooms that need to be cleaned or turned over, so I can plan my shift accordingly. | Employee |
 | As a housekeeping employee, I want to notify other employees when I've turned over a room, so they can finalize check-in and give the next guest a key. | Employee |
+
+---
+
+## Technology Used
+
+Trip Planner is a full-stack app, built primarily with Django. The Bootstrap framework is incorporated on the front-end, and utilized languages include HTML, CSS, Python, and SQL.
+
+---
+
+## Installation
+
+Here are instructions for installing the app on your local machine.
+
+1. Clone the copy to your local machine.
+
+```
+git clone https://github.com/alanavery/base
+```
+
+2. Download and install Python. If working on Python 2, install pip (package manager) as well.
+
+3. Create a virtual environment for the project and activate it in your terminal.
+
+4. Navigate to the project's root directory and run the following command to install all of the packages required to run the project:
+
+```
+pip3 install -r requirements.txt
+```
+
+5. This app utilizes PostgreSQL for its database system. If you don't have PostgreSQL installed on your local machine, you can download it [here.](https://www.postgresql.org/download/)
+
+6. With PostgreSQL installed, create a database on your local machine named `base` and migrate the project's models to it.
+
+```
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+
+7. Start the server, then check to see that the project is running on your local host.
+
+```
+python3 manage.py runserver
+```
