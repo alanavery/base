@@ -11,7 +11,11 @@
       "city": "Chicago",
       "state": "IL",
       "zip_code": "60657",
-      "country": "United States"
+      "country": "United States",
+      "credit_card": "1000200030004000",
+      "exp_month": "12",
+      "exp_year": "21",
+      "cvv": "123"
     }
   }
 ]
