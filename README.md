@@ -2,6 +2,8 @@
 
 ### Hotel website and hotel management app
 
+![Home page screenshot](planning/home-page-screenshot.png)
+
 A two-sided hotel app, with one side focused on future and current guests, and a second side built for hotel employees. The public-facing side shows off the hotel and its amenities. It also allows users to create an account, make reservations, and update guest details. The employee-only side, which takes advantage of Django's built-in admin features, allows specific users to manage all of the hotel’s reservations, as well as the accounts of guests. It even includes a simple housekeeping system that tracks which rooms have been cleaned.
 
 ---
@@ -15,15 +17,15 @@ Initial planning for the app consisted of three elements: wireframes, user stori
 <!-- prettier-ignore -->
 URL: /
 ![Home page wireframe](planning/wireframes/guest-home.png)
-URL: /booking/step1
+URL: /book
 ![Booking step 1 page wireframe](planning/wireframes/guest-booking-step1.png)
-URL: /booking/step2
+URL: /book/:room_number
 ![Booking step 2 page wireframe](planning/wireframes/guest-booking-step2.png)
-URL: /booking/:id/confirmation
+URL: /booking/confirmation/booking_id
 ![Booking confirmation page wireframe](planning/wireframes/guest-booking-confirmation.png)
-URL: /create-account
+URL: /signup
 ![Create account page wireframe](planning/wireframes/guest-create-account.png)
-URL: /guest/:id/profile
+URL: /profile
 ![Profile page wireframe](planning/wireframes/guest-profile.png)
 
 ### Database ERD
