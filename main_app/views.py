@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from .models import Guest, GuestId, Room, Booking
-from .forms import AvailabilityForm, CreateBookingForm, GuestForm, SignupForm
+from .forms import AvailabilityForm, CreateBookingForm, GuestForm, SignupForm, LoginForm
 
 
 def index(request):
@@ -21,8 +21,8 @@ def index(request):
 def signup(request):
     # /signup (POST)
     if request.method == 'POST':
-        user_form = UserCreationForm(request.POST)
-        guest_form = GuestForm(request.POST)
+        user_form = SignupForm(request.POST, label_suffix='')
+        guest_form = GuestForm(request.POST, label_suffix='')
         if user_form.is_valid() and guest_form.is_valid:
             user = user_form.save()
             guest = guest_form.save()
@@ -36,8 +36,8 @@ def signup(request):
 
     # /signup (GET)
     else:
-        user_form = UserCreationForm(request.POST)
-        guest_form = GuestForm(request.POST)
+        user_form = SignupForm(request.POST, label_suffix='')
+        guest_form = GuestForm(request.POST, label_suffix='')
         return render(request, 'signup.html', {
             'user_form': user_form,
             'guest_form': guest_form
@@ -47,7 +47,7 @@ def signup(request):
 def login_view(request):
     # /login (POST)
     if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
+        form = LoginForm(request, request.POST, label_suffix='')
         if form.is_valid():
             u = form.cleaned_data['username']
             p = form.cleaned_data['password']
@@ -63,7 +63,7 @@ def login_view(request):
 
     # /login (GET)
     else:
-        form = AuthenticationForm()
+        form = LoginForm(label_suffix='')
         return render(request, 'login.html', {'form': form})
 
 

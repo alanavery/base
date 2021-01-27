@@ -2,13 +2,37 @@
 {% load static %}
 {% block content %}
 
-<h2>Sign Up</h2>
+<section class="section-auth">
+  <div class="auth-content">
+    <h1>sign up</h1>
+    <div class="booking-container">
+      <form class="form-columns-1" action="." method="post">
+        {% csrf_token %}
+        {% for field in user_form %}
+        <div class="form-floating">
+          {{ field }}
+          {{ field.label_tag }}
+        </div>
+        {% endfor %}
 
-<form method="post">
-  {% csrf_token %}
-  {{ user_form.as_p }}
-  {{ guest_form.as_p }}
-  <input type="submit" value="Submit" />
-</form>
+        <ul>
+          <li>150 characters or fewer. Letters, digits and @/./+/-/_ only.</li>
+          <li>Your password can’t be too similar to your other personal information.</li>
+          <li>Your password must contain at least 8 characters.</li>
+          <li>Your password can’t be a commonly used password.</li>
+          <li>Your password can’t be entirely numeric.</li>
+        </ul>
+
+        {% for field in guest_form %}
+        <div class="form-floating">
+          {{ field }}
+          {{ field.label_tag }}
+        </div>
+        {% endfor %}
+        <input class="base-btn" type="submit" value="Submit" />
+      </form>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

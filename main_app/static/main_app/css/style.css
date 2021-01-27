@@ -1,11 +1,430 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #1d1d1d;
+}
+
+.container {
+  padding: 0;
+}
+
+header {
+  padding: 40px 30px 10px 30px;
+  background-color: #1d1d1d;
+}
+
+footer {
+  padding: 40px 30px;
+  background-color: #1d1d1d;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+}
+
+h1 {
+  padding-bottom: 18px;
+  margin: 0;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+h2 {
+  padding-bottom: 16px;
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+h4 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 2.4;
+}
+
+.text-column-1 {
+  grid-column: 2 / span 5;
+}
+
+.text-column-2 {
+  grid-column: 7 / span 5;
+}
+
+.base-btn {
+  padding: 6px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: #709845;
+  color: white;
+}
+
+.base-btn a {
+  color: white;
+  text-decoration: none;
+}
+
+.base-logo {
+  font-size: 30px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.book-btn {
+  padding: 6px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: #709845;
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+}
+
 #welcome {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 30px;
+  min-height: 500px;
   background-image: url('../images/lobby.jpg');
   background-position: center;
   background-size: cover;
 }
 
+.welcome-text {
+  grid-column: 1 / span 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 30px;
+  background-color: rgba(29, 29, 29, 0.8);
+  color: white;
+}
+
+.welcome-form {
+  grid-column: 8 / span 4;
+  padding: 20px;
+  margin: 100px 0;
+  background-color: white;
+}
+
+#about,
+#neighborhood {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 30px;
+  min-height: 500px;
+  padding: 100px 0;
+  background-color: white;
+}
+
+#about h1,
+#neighborhood h1 {
+  color: #709845;
+  grid-column: 1 / span 12;
+  text-align: center;
+}
+
+#rooms h1 {
+  position: absolute;
+  z-index: 1;
+  padding: 30px;
+  color: white;
+}
+
+#amenities {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 30px;
+  min-height: 500px;
+  padding: 60px 0;
+  background-color: #182a48;
+}
+
+.amenities-cards {
+  grid-column: 2 / span 10;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
+}
+
+.amenities-card {
+  background-color: white;
+}
+
+.amenities-card img {
+  width: 100%;
+}
+
+#amenities h1 {
+  color: white;
+  grid-column: 1 / span 12;
+  text-align: center;
+}
+
+/* Booking pages —————————————————————————————— */
+
+.section-booking {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: start;
+  gap: 20px;
+  min-height: 800px;
+  padding: 30px;
+  background-color: #182a48;
+}
+
+.section-booking h1 {
+  color: white;
+  padding-bottom: 0;
+}
+
+.section-booking p {
+  padding: 10px 0;
+  line-height: 1.8;
+}
+
+.booking-2-3 {
+  grid-column: 1 / span 8;
+  display: grid;
+  row-gap: 20px;
+}
+
+.booking-1-3 {
+  grid-column: 9 / span 4;
+}
+
+.booking-1-3 img {
+  width: 100%;
+  margin: 10px 0 20px 0;
+}
+
+.booking-3-3 {
+  grid-column: 2 / span 10;
+  display: grid;
+  row-gap: 20px;
+}
+
+.booking-container {
+  padding: 20px;
+  background-color: white;
+}
+
+.room-card {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  padding: 20px;
+  background-color: white;
+}
+
+.room-card-text {
+  grid-column: 1 / span 4;
+}
+
+.room-card .base-btn {
+  margin: 10px 6px 0 0;
+}
+
+.room-card-img {
+  grid-column: 5 / span 8;
+}
+
+.confirmation {
+  padding: 30px 0;
+  min-height: 0;
+}
+
+.confirmation h1 {
+  grid-column: 1 / span 12;
+  text-align: center;
+}
+
+.signup {
+  grid-column: 4 / span 6;
+}
+
+.signup ul {
+  padding-top: 10px;
+  margin: 0;
+}
+
+.signup li {
+  padding: 0;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.section-auth .booking-container {
+  grid-column: 4 / span 6;
+}
+
+.form-columns-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 10px;
+  height: 100%;
+}
+
 .form-columns-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 1rem;
+  align-items: end;
+  gap: 10px;
+}
+
+form .base-btn {
+  justify-self: end;
+  align-self: end;
+}
+
+/* Authorization and profile —————————————————————————————— */
+
+.section-auth {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  min-height: 800px;
+  padding: 30px;
+  background-color: #182a48;
+}
+
+.auth-content {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: start;
+  gap: 20px;
+}
+
+.section-auth h1 {
+  grid-column: 1 / span 12;
+  color: white;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+.section-auth p {
+  padding: 10px 0;
+  line-height: 1.8;
+}
+
+.profile-h1 {
+  grid-column: 1 / span 12;
+  text-transform: lowercase;
+}
+
+.section-auth ul,
+.profile ul {
+  padding: 10px 0 18px 16px;
+  margin: 0;
+}
+
+.section-auth li,
+.profile li {
+  padding: 0;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.profile ul {
+  padding-bottom: 0;
+}
+
+/* Media queries —————————————————————————————— */
+
+@media (max-width: 992px) {
+  .text-column-1,
+  .text-column-2 {
+    grid-column: 2 / span 10;
+    margin-bottom: 20px;
+  }
+
+  .base-logo {
+    font-size: 40px;
+  }
+
+  .navbar-collapse {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  nav li {
+    font-size: 24px;
+  }
+
+  .book-btn {
+    justify-self: end;
+  }
+
+  .welcome-text {
+    grid-column: 1 / span 12;
+    height: auto;
+  }
+
+  .welcome-form {
+    grid-column: 2 / span 10;
+    margin: 60px 0;
+  }
+
+  #about {
+    padding: 60px 0;
+  }
+
+  #amenities {
+    padding: 30px 0;
+  }
+
+  .amenities-cards {
+    grid-column: 2 / span 10;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+  }
+
+  .booking-2-3 {
+    grid-column: 1 / span 12;
+  }
+
+  .booking-1-3 {
+    grid-column: 1 / span 12;
+  }
+
+  .room-card-text {
+    grid-column: 1 / span 12;
+  }
+
+  .room-card-img {
+    grid-column: 1 / span 12;
+  }
+
+  .signup {
+    grid-column: 3 / span 8;
+  }
+
+  .section-auth .booking-container {
+    grid-column: 2 / span 10;
+  }
 }

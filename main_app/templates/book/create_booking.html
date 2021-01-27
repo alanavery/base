@@ -2,45 +2,43 @@
 {% load static %}
 {% block content %}
 
-<section class="row py-5">
-  <div class="col-7">
-    <h1>Guest Details</h1>
-    
-    <form action="" method="post">
-      {% csrf_token %}
-      {% for field in form %}
-      <div class="form-floating mb-3">
-        {{ field }}
-        {{ field.label_tag }}
-      </div>
-      {% endfor %}
-      <input class="btn btn-primary" type="submit" value="Book">
-    </form>
+<section class="section-booking">
+  <div class="booking-2-3">
+    <h1>guest details</h1>
+
+    <div class="booking-container">
+      <form class="form-columns-1" action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-floating">
+          {{ field }}
+          {{ field.label_tag }}
+        </div>
+        {% endfor %}
+        <input class="base-btn" type="submit" value="Book">
+      </form>
+    </div>
   </div>
 
-  <div class="col-4 offset-1">
-    <div class="row mb-3 p-3 bg-light d-flex align-items-start">
+  <div class="booking-1-3">
+    <div class="booking-container">
       <h2>Your Booking</h2>
-      <ul class="list-unstyled">
-        <li>Check-In Date: {{ request.session.check_in_date }}</li>
-        <li>Check-Out Date: {{ request.session.check_out_date }}</li>
-        <li>Number of Guests: {{ request.session.total_guests }}</li>
-      </ul>
-  
+      <h4>Check-In Date: {{ request.session.check_in_date }}</h4>
+      <h4>Check-Out Date: {{ request.session.check_out_date }}</h4>
+      <h4>Number of Guests: {{ request.session.total_guests }}</h4>
+
       {% if room.room_type == 'standard, street view' %}
-      <img class="img-fluid" src="https://res.cloudinary.com/alanavery/image/upload/v1611631295/base/room-1-1.jpg" alt="">
+      <img src="https://res.cloudinary.com/alanavery/image/upload/v1611631295/base/room-1-1.jpg" alt="">
       {% elif room.room_type == 'standard, courtyard view' %}
-      <img class="img-fluid" src="https://res.cloudinary.com/alanavery/image/upload/v1611631294/base/room-2-1.jpg" alt="">
+      <img src="https://res.cloudinary.com/alanavery/image/upload/v1611631294/base/room-2-1.jpg" alt="">
       {% elif room.room_type == 'suite, street view' %}
-      <img class="img-fluid" src="https://res.cloudinary.com/alanavery/image/upload/v1611631295/base/room-3-1.jpg" alt="">
+      <img src="https://res.cloudinary.com/alanavery/image/upload/v1611631295/base/room-3-1.jpg" alt="">
       {% else %}
-      <img class="img-fluid" src="https://res.cloudinary.com/alanavery/image/upload/v1611631295/base/room-4-1.jpg" alt="">
+      <img src="https://res.cloudinary.com/alanavery/image/upload/v1611631295/base/room-4-1.jpg" alt="">
       {% endif %}
 
-      <ul class="list-unstyled">
-        <li>Room Type: {{ room.room_type }}</li>
-        <li>Beds: {{ room.beds }}</li>
-      </ul>
+      <h4>Room Type: {{ room.room_type }}</h4>
+      <h4>Beds: {{ room.beds }}</h4>
     </div>
   </div>
 </section>

@@ -1,14 +1,23 @@
-<!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
-<h2>Log In</h2>
-<form action="." method="post">
-  <!-- prettier-ignore -->
-  {% csrf_token %}
-  {{ form.as_p }}
 
-  <input type="submit" value="Submit" />
-</form>
+<section class="section-auth">
+  <div class="auth-content">
+    <h1>log in</h1>
+    <div class="booking-container">
+      <form class="form-columns-1" action="." method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-floating">
+          {{ field }}
+          {{ field.label_tag }}
+        </div>
+        {% endfor %}
+        <input class="base-btn" type="submit" value="Submit" />
+      </form>
+    </div>
+  </div>
+</section>
+
 {% endblock %}
