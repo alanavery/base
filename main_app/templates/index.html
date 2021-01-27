@@ -11,9 +11,9 @@
 
   <div class="welcome-form">
     <h2>Book Your Stay</h2>
-    <form action="{% url 'book' %}" method="get">
+    <form class="form-columns-1" action="{% url 'book' %}" method="get">
       {% for field in form %}
-      <div class="form-floating mb-3">
+      <div class="form-floating">
         {{ field }}
         {{ field.label_tag }}
       </div>

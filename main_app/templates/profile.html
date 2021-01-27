@@ -10,10 +10,17 @@
       <form class="form-columns-2" action="{% url 'update_guest' %}" method="post">
         {% csrf_token %}
         {% for field in guest_form %}
+        {% if field.label == 'Exp Month' or field.label == 'Exp Year' or field.label == 'CVV' %}
+        <div class="form-floating form-field-small">
+          {{ field }}
+          {{ field.label_tag }}
+        </div>
+        {% else %}
         <div class="form-floating">
           {{ field }}
           {{ field.label_tag }}
         </div>
+        {% endif %}
         {% endfor %}
         <input class="base-btn" type="submit" value="Update">
       </form>

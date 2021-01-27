@@ -2,18 +2,25 @@
 {% load static %}
 {% block content %}
 
-<section class="section-booking">
-  <div class="booking-2-3">
-    <h1>guest details</h1>
+<section class="section-booking guest-details">
+  <h1>guest details</h1>
 
+  <div class="booking-2-3">
     <div class="booking-container">
       <form class="form-columns-1" action="" method="post">
         {% csrf_token %}
         {% for field in form %}
+        {% if field.label == 'Exp Month' or field.label == 'Exp Year' or field.label == 'CVV' %}
+        <div class="form-floating form-field-small">
+          {{ field }}
+          {{ field.label_tag }}
+        </div>
+        {% else %}
         <div class="form-floating">
           {{ field }}
           {{ field.label_tag }}
         </div>
+        {% endif %}
         {% endfor %}
         <input class="base-btn" type="submit" value="Book">
       </form>

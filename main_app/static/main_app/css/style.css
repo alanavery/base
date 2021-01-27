@@ -250,6 +250,10 @@ p {
   grid-column: 5 / span 8;
 }
 
+.guest-details h1 {
+  grid-column: 1 / span 12;
+}
+
 .confirmation {
   padding: 30px 0;
   min-height: 0;
@@ -282,17 +286,45 @@ p {
 
 .form-columns-1 {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, 1fr);
   align-items: start;
   gap: 10px;
   height: 100%;
 }
 
+.form-columns-1 .form-floating {
+  grid-column: 1 / span 3;
+}
+
+.form-columns-1 .form-field-small {
+  grid-column-start: span 1;
+}
+
+.form-columns-1 .base-btn {
+  grid-column-start: 3;
+}
+
+.form-columns-1 ul {
+  grid-column: 1 / span 3;
+}
+
 .form-columns-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
   align-items: end;
   gap: 10px;
+}
+
+.form-columns-2 .form-floating {
+  grid-column-start: span 3;
+}
+
+.form-columns-2 .form-field-small {
+  grid-column-start: span 2;
+}
+
+.form-columns-2 .base-btn {
+  grid-column-start: 6;
 }
 
 form .base-btn {
@@ -426,5 +458,21 @@ form .base-btn {
 
   .section-auth .booking-container {
     grid-column: 2 / span 10;
+  }
+
+  .form-columns-2 .form-floating {
+    grid-column-start: span 6;
+  }
+
+  .form-columns-2 .form-field-small {
+    grid-column-start: span 2;
+  }
+
+  .section-booking {
+    min-height: 0;
+  }
+
+  .section-auth {
+    min-height: 0;
   }
 }

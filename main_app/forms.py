@@ -53,7 +53,11 @@ class GuestForm(ModelForm):
         labels = {
             'first_name': 'First Name',
             'last_name': 'Last Name',
-            'zip_code': 'Zip Code'
+            'zip_code': 'Zip Code',
+            'credit_card': 'Credit Card',
+            'exp_month': 'Exp Month',
+            'exp_year': 'Exp Year',
+            'cvv': 'CVV'
         }
         widgets = {
             'first_name': TextInput(attrs={
@@ -91,7 +95,23 @@ class GuestForm(ModelForm):
             'country': TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'United States'
-            })
+            }),
+            'credit_card': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '1000200030004000'
+            }),
+            'exp_month': TextInput(attrs={
+                'class': 'form-control form-sm-field',
+                'placeholder': '12'
+            }),
+            'exp_year': TextInput(attrs={
+                'class': 'form-control form-sm-field',
+                'placeholder': '21'
+            }),
+            'cvv': TextInput(attrs={
+                'class': 'form-control form-sm-field',
+                'placeholder': '123'
+            }),
         }
 
 
